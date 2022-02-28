@@ -2,6 +2,8 @@ import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 import PropTypes from "prop-types";
 import { useState } from "react";
+import { useRecoilState } from "recoil";
+import { userStoredList } from "../atoms";
 
 const ModalContainer = styled.div`
   position: fixed;
@@ -31,6 +33,16 @@ const Row = styled.div`
 const Label = styled.label`
   color: #b2b2b2;
   font-weight: 500;
+`;
+const Input = styled.input`
+  display: block;
+  width: 100%;
+  margin: 0.2rem 0 0;
+  padding: 0.6rem 0.3rem;
+  box-sizing: border-box;
+  border: 1px solid #aaa;
+  border-radius: 5px;
+  outline: none;
 `;
 const Value = styled.p`
   margin: 0.2rem 0 0;
@@ -63,10 +75,18 @@ const Button = styled.button`
   }}
 `;
 
-const InputRow = ({ labelName, value, allowEdit }) => (
+const InputRow = ({ labelName, value, allowEdit, onChange }) => (
   <Row>
     <Label>{labelName}</Label>
-    <Value>{value}</Value>
+    {allowEdit ? (
+      <Input
+        value={value}
+        placeholder="내용을 입력해주세요. "
+        onChange={onChange}
+      ></Input>
+    ) : (
+      <Value>{value}</Value>
+    )}
   </Row>
 );
 
@@ -78,8 +98,31 @@ InputRow.propTypes = {
 
 function Modal({ type, cardData }) {
   const [modalOpen, setModalOpen] = useState(true);
+  const [memo, setMemo] = useState(cardData.memo);
+  const [userList, setUserList] = useRecoilState(userStoredList);
   const closeModal = () => setModalOpen(false);
   const preventClose = (e) => e.stopPropagation();
+  const changeInput = (e) => setMemo(e.target.value);
+
+  const saveData = () => {
+    if (memo === "") return; // toast: "메모를 입력해 주세요."
+    const list = userList.map((item) =>
+      item.id === cardData.id ? { ...item, memo: memo } : item
+    );
+    setUserList(list);
+    localStorage.setItem("userList", list);
+    // toast: "저장이 완료되었습니다."
+    closeModal();
+  };
+
+  const removeData = () => {
+    const list = userList.filter((item) => item.id !== cardData.id);
+    setUserList(list);
+    localStorage.setItem("userList", list);
+    // toast: "삭제가 완료되었습니다."
+    closeModal();
+  };
+
   return (
     modalOpen &&
     cardData && (
@@ -92,15 +135,18 @@ function Modal({ type, cardData }) {
             labelName="메모"
             value={cardData.memo}
             allowEdit={type === "edit"}
+            onChange={changeInput}
           ></InputRow>
           <ButtonWrap>
             {type === "edit" ? (
               <>
-                <Button color="red">삭제</Button>
-                <Button>수정</Button>
+                <Button color="red" onClick={removeData}>
+                  삭제
+                </Button>
+                <Button onClick={saveData}>수정</Button>
               </>
             ) : (
-              <Button>저장</Button>
+              <Button onClick={saveData}>저장</Button>
             )}
           </ButtonWrap>
         </ModalBox>
