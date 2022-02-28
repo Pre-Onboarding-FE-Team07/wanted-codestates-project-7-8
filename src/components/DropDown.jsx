@@ -1,7 +1,8 @@
-import { useCallback, useState, useRef } from 'react';
+import { useCallback, useState, useRef, memo } from 'react';
 import styled from '@emotion/styled';
 
 const DropdownList = ({ list, onClickEvent }) => {
+  const [dropDownLabel, setDropDownLabel] = useState(list[0]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const curPos = useRef(null);
 
@@ -9,15 +10,19 @@ const DropdownList = ({ list, onClickEvent }) => {
     setIsDropdownOpen((value) => !value);
   }, []);
 
-  const selectQuery = useCallback((e) => {
-    onClickEvent(e.target.textContent);
-    setIsDropdownOpen(false);
-  }, []);
+  const selectQuery = useCallback(
+    (e) => {
+      onClickEvent(e.target.textContent);
+      setDropDownLabel(e.target.textContent);
+      setIsDropdownOpen(false);
+    },
+    [onClickEvent]
+  );
 
   return (
     <>
       <Dropdown ref={curPos} onClick={showDropBox}>
-        선택
+        {dropDownLabel}
         <DownBtn />
       </Dropdown>
       {isDropdownOpen && (
@@ -44,14 +49,13 @@ const Dropdown = styled.div`
   border: 1px solid rgba(0, 0, 0, 0.5);
   padding: 0.375rem 0.75rem;
   font-size: 1rem;
-  line-height: 1.5;
   border-radius: 0.25rem;
   align-items: center;
   box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.25);
   cursor: pointer;
 
   & svg {
-    margin-left: 0.5rem;
+    margin-left: 1.5rem;
   }
 
   &:hover {
@@ -107,4 +111,4 @@ const DropListContainer = styled.div`
   }
 `;
 
-export default DropdownList;
+export default memo(DropdownList);
