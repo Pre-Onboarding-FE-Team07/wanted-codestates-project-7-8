@@ -1,10 +1,10 @@
-import { css } from '@emotion/react';
-import styled from '@emotion/styled';
-import PropTypes from 'prop-types';
-import { useState } from 'react';
-import { useRecoilState } from 'recoil';
-import { userStoredList } from '../atoms';
-import { USER_STORED_LIST } from '../constants/localStorage';
+import { css } from "@emotion/react";
+import styled from "@emotion/styled";
+import PropTypes from "prop-types";
+import { useState } from "react";
+import { useRecoilState } from "recoil";
+import { userStoredList } from "../atoms";
+import { USER_STORED_LIST } from "../constants/localStorage";
 
 const Modal = ({ type, cardData }) => {
   const [modalOpen, setModalOpen] = useState(true);
@@ -15,12 +15,12 @@ const Modal = ({ type, cardData }) => {
   const changeInput = (e) => setMemo(e.target.value);
 
   const saveData = () => {
-    if (memo === '') return; // toast: "메모를 입력해 주세요."
+    if (memo === "") return; // toast: "메모를 입력해 주세요."
     const list = userList.map((item) =>
       item.id === cardData.id ? { ...item, memo: memo } : item
     );
     setUserList(list);
-    localStorage.setItem(USER_STORED_LIST, list);
+    localStorage.setItem(USER_STORED_LIST, JSON.stringify(list));
     // toast: "저장이 완료되었습니다."
     closeModal();
   };
@@ -28,7 +28,7 @@ const Modal = ({ type, cardData }) => {
   const removeData = () => {
     const list = userList.filter((item) => item.id !== cardData.id);
     setUserList(list);
-    localStorage.setItem(USER_STORED_LIST, list);
+    localStorage.setItem(USER_STORED_LIST, JSON.stringify(list));
     // toast: "삭제가 완료되었습니다."
     closeModal();
   };
@@ -38,19 +38,19 @@ const Modal = ({ type, cardData }) => {
     cardData && (
       <ModalContainer onClick={closeModal}>
         <ModalBox onClick={preventClose}>
-          <InputRow labelName='이름' value={cardData.name}></InputRow>
-          <InputRow labelName='주소' value={cardData.address}></InputRow>
-          <InputRow labelName='연락처' value={cardData.phone}></InputRow>
+          <InputRow labelName="이름" value={cardData.name}></InputRow>
+          <InputRow labelName="주소" value={cardData.address}></InputRow>
+          <InputRow labelName="연락처" value={cardData.phone}></InputRow>
           <InputRow
-            labelName='메모'
+            labelName="메모"
             value={cardData.memo}
             allowEdit={true}
             onChange={changeInput}
           ></InputRow>
           <ButtonWrap>
-            {type === 'edit' ? (
+            {type === "edit" ? (
               <>
-                <Button color='red' onClick={removeData}>
+                <Button color="red" onClick={removeData}>
                   삭제
                 </Button>
                 <Button onClick={saveData}>수정</Button>
@@ -71,7 +71,7 @@ const InputRow = ({ labelName, value, allowEdit, onChange }) => (
     {allowEdit ? (
       <Input
         value={value}
-        placeholder='내용을 입력해주세요. '
+        placeholder="내용을 입력해주세요. "
         onChange={onChange}
       ></Input>
     ) : (
@@ -148,9 +148,9 @@ const Button = styled.button`
   padding: 0.6rem;
   ${({ color }) => {
     return css`
-      background-color: ${color === 'red' ? '#E74C3C' : '#3FC176'};
+      background-color: ${color === "red" ? "#E74C3C" : "#3FC176"};
       &:hover {
-        background-color: ${color === 'red' ? '#df4433' : '#37b86c'};
+        background-color: ${color === "red" ? "#df4433" : "#37b86c"};
       }
     `;
   }}
