@@ -1,3 +1,4 @@
+import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 import PropTypes from "prop-types";
 import { useState } from "react";
@@ -19,7 +20,7 @@ const ModalBox = styled.div`
   transform: translate(-50%, -50%);
   width: 84vw;
   min-width: 300px;
-  max-width: 480px;
+  max-width: 400px;
   background-color: white;
   padding: 1rem;
   padding-top: 2rem;
@@ -30,10 +31,9 @@ const Row = styled.div`
 const Label = styled.label`
   color: #b2b2b2;
   font-weight: 500;
-  margin-bottom: 0.2rem;
 `;
 const Value = styled.p`
-  margin: 0;
+  margin: 0.2rem 0 0;
 `;
 const ButtonWrap = styled.div`
   display: flex;
@@ -44,6 +44,7 @@ const ButtonWrap = styled.div`
 `;
 
 const Button = styled.button`
+  cursor: pointer;
   border-radius: 0.28rem;
   border: 0;
   outline: none;
@@ -52,8 +53,14 @@ const Button = styled.button`
   font-size: 1rem;
   flex: 1;
   padding: 0.6rem;
-  background-color: ${(props) =>
-    props.color === "red" ? "#E74C3C" : "#3FC176"};
+  ${({ color }) => {
+    return css`
+      background-color: ${color === "red" ? "#E74C3C" : "#3FC176"};
+      &:hover {
+        background-color: ${color === "red" ? "#df4433" : "#37b86c"};
+      }
+    `;
+  }}
 `;
 
 const InputRow = ({ labelName, value, allowEdit }) => (
@@ -69,17 +76,23 @@ InputRow.propTypes = {
   allowEdit: PropTypes.bool,
 };
 
-function Modal({ type }) {
+function Modal({ type, cardData }) {
   const [modalOpen, setModalOpen] = useState(true);
-  const closeModal = (e) => setModalOpen(false);
+  const closeModal = () => setModalOpen(false);
   const preventClose = (e) => e.stopPropagation();
   return (
-    modalOpen && (
+    modalOpen &&
+    cardData && (
       <ModalContainer onClick={closeModal}>
         <ModalBox onClick={preventClose}>
-          <InputRow labelName="이름" value="홍길동"></InputRow>
-          <InputRow labelName="이름" value="홍길동"></InputRow>
-          <InputRow labelName="메모" value="홍길동" allowEdit={true}></InputRow>
+          <InputRow labelName="이름" value={cardData.name}></InputRow>
+          <InputRow labelName="주소" value={cardData.address}></InputRow>
+          <InputRow labelName="연락처" value={cardData.phone}></InputRow>
+          <InputRow
+            labelName="메모"
+            value={cardData.memo}
+            allowEdit={type === "edit"}
+          ></InputRow>
           <ButtonWrap>
             {type === "edit" ? (
               <>
