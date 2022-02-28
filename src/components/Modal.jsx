@@ -134,7 +134,7 @@ function Modal({ type, cardData }) {
           <InputRow
             labelName="메모"
             value={cardData.memo}
-            allowEdit={type === "edit"}
+            allowEdit={true}
             onChange={changeInput}
           ></InputRow>
           <ButtonWrap>
