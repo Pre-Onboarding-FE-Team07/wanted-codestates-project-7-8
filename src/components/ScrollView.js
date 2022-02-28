@@ -11,11 +11,10 @@ export default function ScrollView({
   const containerRef = useRef();
 
   useEffect(() => {
-    const root = containerRef.current;
+    const isHeightTooLarge = containerRef.current.clientHeight >= window.innerHeight;
+    const root = isHeightTooLarge ? null : containerRef.current;
     const observer = new IntersectionObserver(
-      ([entry]) => {
-        entry.isIntersecting && onReachScrollEnd();
-      },
+      ([entry]) => entry.isIntersecting && onReachScrollEnd(),
       { root, rootMargin: `0px 0px ${threshold}px`, threshold: 1 },
     );
     if (data.length > 0) {
