@@ -1,5 +1,5 @@
-import styled from '@emotion/styled';
 import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { useRecoilState } from 'recoil';
@@ -20,7 +20,7 @@ const Modal = ({ type, cardData }) => {
       item.id === cardData.id ? { ...item, memo: memo } : item
     );
     setUserList(list);
-    localStorage.setItem(USER_STORED_LIST, list);
+    localStorage.setItem(USER_STORED_LIST, JSON.stringify(list));
     // toast: "저장이 완료되었습니다."
     closeModal();
   };
@@ -28,7 +28,7 @@ const Modal = ({ type, cardData }) => {
   const removeData = () => {
     const list = userList.filter((item) => item.id !== cardData.id);
     setUserList(list);
-    localStorage.setItem(USER_STORED_LIST, list);
+    localStorage.setItem(USER_STORED_LIST, JSON.stringify(list));
     // toast: "삭제가 완료되었습니다."
     closeModal();
   };
