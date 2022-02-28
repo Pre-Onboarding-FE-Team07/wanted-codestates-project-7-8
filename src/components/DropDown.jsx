@@ -42,9 +42,6 @@ const Dropdown = styled.div`
   text-align: center;
   white-space: nowrap;
   vertical-align: middle;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
   user-select: none;
   border: 1px solid rgba(0, 0, 0, 0.5);
   padding: 0.375rem 0.75rem;
