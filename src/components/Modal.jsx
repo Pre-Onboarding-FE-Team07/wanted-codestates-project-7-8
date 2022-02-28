@@ -1,6 +1,6 @@
-import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 import PropTypes from "prop-types";
+import { useState } from "react";
 
 const ModalContainer = styled.div`
   position: fixed;
@@ -9,6 +9,7 @@ const ModalContainer = styled.div`
   height: 100%;
   top: 0;
   left: 0;
+  z-index: 101;
 `;
 
 const ModalBox = styled.div`
@@ -16,7 +17,7 @@ const ModalBox = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 90vw;
+  width: 84vw;
   min-width: 300px;
   max-width: 480px;
   background-color: white;
@@ -69,24 +70,29 @@ InputRow.propTypes = {
 };
 
 function Modal({ type }) {
+  const [modalOpen, setModalOpen] = useState(true);
+  const closeModal = (e) => setModalOpen(false);
+  const preventClose = (e) => e.stopPropagation();
   return (
-    <ModalContainer>
-      <ModalBox>
-        <InputRow labelName="이름" value="홍길동"></InputRow>
-        <InputRow labelName="이름" value="홍길동"></InputRow>
-        <InputRow labelName="메모" value="홍길동" allowEdit={true}></InputRow>
-        <ButtonWrap>
-          {type === "edit" ? (
-            <>
-              <Button color="red">삭제</Button>
-              <Button>수정</Button>
-            </>
-          ) : (
-            <Button>저장</Button>
-          )}
-        </ButtonWrap>
-      </ModalBox>
-    </ModalContainer>
+    modalOpen && (
+      <ModalContainer onClick={closeModal}>
+        <ModalBox onClick={preventClose}>
+          <InputRow labelName="이름" value="홍길동"></InputRow>
+          <InputRow labelName="이름" value="홍길동"></InputRow>
+          <InputRow labelName="메모" value="홍길동" allowEdit={true}></InputRow>
+          <ButtonWrap>
+            {type === "edit" ? (
+              <>
+                <Button color="red">삭제</Button>
+                <Button>수정</Button>
+              </>
+            ) : (
+              <Button>저장</Button>
+            )}
+          </ButtonWrap>
+        </ModalBox>
+      </ModalContainer>
+    )
   );
 }
 
