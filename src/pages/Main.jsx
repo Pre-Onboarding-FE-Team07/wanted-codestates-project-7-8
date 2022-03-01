@@ -3,7 +3,7 @@ import { userStoredList } from '../atoms';
 
 const Main = () => {
   const [userList, setUserList] = useRecoilState(userStoredList);
-
+  
   return <div>MainPage Hello World!</div>;
 };
 
