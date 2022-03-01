@@ -20,9 +20,9 @@
     "lint-staged": "lint-staged"
   },
   "lint-staged": {
-    "*.{js,jsx}": [
+    "**/*.{js,jsx}": [
       "prettier --write",
-      "eslint --cache --fix"
+      "eslint --fix"
     ]
   },
   "eslintConfig": {
