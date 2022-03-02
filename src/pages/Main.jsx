@@ -12,7 +12,6 @@ import SearchBar from '../components/SearchBar';
 const Main = () => {
   const [userList, setUserList] = useRecoilState(userStoredList);
 
-<<<<<<< HEAD
   const queryTextHandler = useCallback((type, text) => {
     console.log(type, text);
   }, []);
@@ -31,14 +30,6 @@ const Main = () => {
       </CardContainer>
     </Container>
   );
-=======
-  const queryTextHandler = useCallback((queryText) => {
-    const [key, value] = queryText.split('|');
-    console.log(key, value);
-  }, []);
-
-  return <SearchBar onQueryText={queryTextHandler} />;
->>>>>>> dev
 };
 
 const CardContainer = styled.div`
