@@ -6,14 +6,11 @@ import { useRecoilState } from 'recoil';
 import { userStoredList } from '../atoms';
 import { USER_STORED_LIST } from '../constants/localStorage';
 
-const Modal = ({ type, cardData }) => {
-  const [modalOpen, setModalOpen] = useState(true);
+const Modal = ({ type, cardData, closeModal }) => {
   const [memo, setMemo] = useState(cardData.memo);
   const [userList, setUserList] = useRecoilState(userStoredList);
-  const closeModal = () => setModalOpen(false);
   const preventClose = (e) => e.stopPropagation();
   const changeInput = (e) => setMemo(e.target.value);
-
   const saveData = () => {
     if (memo === '') return; // toast: "메모를 입력해 주세요."
     const list = userList.map((item) =>
@@ -32,9 +29,7 @@ const Modal = ({ type, cardData }) => {
     // toast: "삭제가 완료되었습니다."
     closeModal();
   };
-
   return (
-    modalOpen &&
     cardData && (
       <ModalContainer onClick={closeModal}>
         <ModalBox onClick={preventClose}>
@@ -43,7 +38,7 @@ const Modal = ({ type, cardData }) => {
           <InputRow labelName='연락처' value={cardData.phone}></InputRow>
           <InputRow
             labelName='메모'
-            value={cardData.memo}
+            value={memo}
             allowEdit={true}
             onChange={changeInput}
           ></InputRow>
