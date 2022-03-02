@@ -14,10 +14,7 @@ const SearchBar = ({ onQueryText }) => {
 
   const queryTextHandler = useCallback(
     (e) => {
-      const queryText = `
-      ${dropdownSelected}|${e.target.value}
-    `;
-      onQueryText(queryText);
+      onQueryText(dropdownSelected, e.target.value);
     },
     [dropdownSelected, onQueryText]
   );

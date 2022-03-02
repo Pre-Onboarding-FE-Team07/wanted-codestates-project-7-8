@@ -1,7 +1,9 @@
 import { atom } from 'recoil';
+import { localStorageEffect } from '../utilities/localStorage';
 import { USER_STORED_LIST } from '../constants/localStorage';
 
 export const userStoredList = atom({
   key: 'userStoredList',
-  default: JSON.parse(localStorage.getItem(USER_STORED_LIST)) || [],
+  default: [],
+  effects: [localStorageEffect(USER_STORED_LIST)],
 });
