@@ -21,7 +21,7 @@ const Modal = ({ type, cardData }) => {
 
   const saveData = () => {
     if (memo === '') return; // toast: "메모를 입력해 주세요."
-    const list = userList.map((item) => (item.id === cardData.id ? { ...item, memo: memo } : item));
+    const list = userList.map((item) => (item.id === cardData.id ? { ...item, memo } : item));
     setUserList(list);
     closeModal();
     // toast: "저장이 완료되었습니다."
