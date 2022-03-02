@@ -1,7 +1,7 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
-import { useEffect, useState, useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { userStoredList } from '../atoms';
 
@@ -21,15 +21,18 @@ const Modal = ({ type, cardData }) => {
 
   const saveData = () => {
     if (memo === '') return; // toast: "메모를 입력해 주세요."
-    const list = userList.map((item) => (item.id === cardData.id ? { ...item, memo } : item));
-    setUserList(list);
+    if (type === 'add') {
+      const { fcNo, fcNm, fcAddr, ref1 } = cardData;
+      setUserList(userList.concat({ fcNo, fcNm, fcAddr, ref1, memo }));
+    } else {
+      setUserList(userList.map((data) => (data.fcNo === cardData.fcNo ? { ...data, memo } : data)));
+    }
     closeModal();
     // toast: "저장이 완료되었습니다."
   };
 
   const removeData = () => {
-    const list = userList.filter((item) => item.id !== cardData.id);
-    setUserList(list);
+    setUserList(userList.filter((item) => item.fcNo !== cardData.fcNo));
     closeModal();
     // toast: "삭제가 완료되었습니다."
   };
@@ -39,9 +42,9 @@ const Modal = ({ type, cardData }) => {
     cardData && (
       <ModalContainer onClick={closeModal}>
         <ModalBox onClick={preventClose}>
-          <InputRow labelName="이름" value={cardData.name}></InputRow>
-          <InputRow labelName="주소" value={cardData.address}></InputRow>
-          <InputRow labelName="연락처" value={cardData.phone}></InputRow>
+          <InputRow labelName="이름" value={cardData.fcNm}></InputRow>
+          <InputRow labelName="주소" value={cardData.fcAddr}></InputRow>
+          <InputRow labelName="연락처" value={cardData.ref1}></InputRow>
           <InputRow
             labelName="메모"
             value={memo}
