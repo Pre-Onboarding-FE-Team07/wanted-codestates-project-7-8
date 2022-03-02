@@ -17,7 +17,7 @@ export default function ScrollView({
       ([entry]) => entry.isIntersecting && onReachScrollEnd(),
       { root, rootMargin: `0px 0px ${threshold}px`, threshold: 1 }
     );
-    if (data.length > 0) {
+    if (data?.length > 0) {
       observer.disconnect();
       observer.observe(containerRef.current.lastChild);
     }
@@ -26,7 +26,7 @@ export default function ScrollView({
 
   return (
     <ul className={className} ref={containerRef}>
-      {data.map((item) => cloneElement(renderItem(item), { key: keyExtractor(item) }))}
+      {data?.map((item) => cloneElement(renderItem(item), { key: keyExtractor(item) }))}
     </ul>
   );
 }
