@@ -22,7 +22,7 @@ const Modal = ({ type, cardData }) => {
 
   const saveData = () => {
     if (memo === '') return; // toast: "메모를 입력해 주세요."
-    const list = userList.map(item => (item.id === cardData.id ? { ...item, memo: memo } : item));
+    const list = userList.map((item) => (item.id === cardData.id ? { ...item, memo: memo } : item));
     setUserList(list);
     localStorage.setItem(USER_STORED_LIST, JSON.stringify(list));
     // toast: "저장이 완료되었습니다."
@@ -30,7 +30,7 @@ const Modal = ({ type, cardData }) => {
   };
 
   const removeData = () => {
-    const list = userList.filter(item => item.id !== cardData.id);
+    const list = userList.filter((item) => item.id !== cardData.id);
     setUserList(list);
     localStorage.setItem(USER_STORED_LIST, JSON.stringify(list));
     // toast: "삭제가 완료되었습니다."
@@ -45,7 +45,7 @@ const Modal = ({ type, cardData }) => {
           <InputRow labelName="주소" value={cardData.address}></InputRow>
           <InputRow labelName="연락처" value={cardData.phone}></InputRow>
           <InputRow
-            labelName='메모'
+            labelName="메모"
             value={memo}
             allowEdit={true}
             onChange={changeInput}
@@ -82,7 +82,7 @@ const InputRow = ({ labelName, value, allowEdit, onChange }) => (
 InputRow.propTypes = {
   labelName: PropTypes.string,
   value: PropTypes.string,
-  allowEdit: PropTypes.bool
+  allowEdit: PropTypes.bool,
 };
 
 const ModalContainer = styled.div`

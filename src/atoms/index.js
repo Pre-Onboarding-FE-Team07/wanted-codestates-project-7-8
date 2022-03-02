@@ -9,16 +9,16 @@ import dummyData from '../data-with-memo.json';
 export const userStoredList = atom({
   key: 'userStoredList',
   default: dummyData,
-  effects: [localStorageEffect(USER_STORED_LIST)]
+  effects: [localStorageEffect(USER_STORED_LIST)],
 });
 export const apiDataList = selector({
   key: 'apiDataList',
   get: async ({ get }) => {
     const response = await axios
       .get(API_URL)
-      .then(res => JSON.parse(res.data).response)
-      .catch(err => console.log(err));
+      .then((res) => JSON.parse(res.data).response)
+      .catch((err) => console.log(err));
 
     return response;
-  }
+  },
 });
