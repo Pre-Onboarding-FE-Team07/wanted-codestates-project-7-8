@@ -1,5 +1,5 @@
 export const localStorageEffect =
-  key =>
+  (key) =>
   ({ setSelf, onSet }) => {
     const savedValue = localStorage.getItem(key);
     if (savedValue !== null) {

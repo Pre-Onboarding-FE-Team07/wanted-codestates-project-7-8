@@ -7,11 +7,11 @@ const DropdownList = ({ list, onClickEvent }) => {
   const curPos = useRef(null);
 
   const showDropBox = useCallback(() => {
-    setIsDropdownOpen(value => !value);
+    setIsDropdownOpen((value) => !value);
   }, []);
 
   const selectQuery = useCallback(
-    e => {
+    (e) => {
       onClickEvent(e.target.textContent);
       setDropDownLabel(e.target.textContent);
       setIsDropdownOpen(false);

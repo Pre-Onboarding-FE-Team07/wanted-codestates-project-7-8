@@ -10,7 +10,7 @@ import Toast from './Toast';
 const msgList = {
   save: '확인 되었습니다.',
   remove: '삭제 되었습니다.',
-  write: '메모를 작성해주세요.'
+  write: '메모를 작성해주세요.',
 };
 
 const Modal = ({ type, cardData }) => {
@@ -20,7 +20,7 @@ const Modal = ({ type, cardData }) => {
   const [memo, setMemo] = useState(cardData.memo);
   const [userList, setUserList] = useRecoilState(userStoredList);
 
-  const handleToast = select => {
+  const handleToast = (select) => {
     if (!toastStatus) {
       setToastStatus(true);
       setToastMsg(msgList[select]);
@@ -41,9 +41,9 @@ const Modal = ({ type, cardData }) => {
     setMemo(cardData.memo);
   }, [cardData]);
 
-  const preventClose = e => e.stopPropagation();
-  const changeInput = e => setMemo(e.target.value);
-  const closeModal = e => setOpen(false);
+  const preventClose = (e) => e.stopPropagation();
+  const changeInput = (e) => setMemo(e.target.value);
+  const closeModal = (e) => setOpen(false);
 
   const saveData = () => {
     if (memo === '') {
@@ -51,7 +51,7 @@ const Modal = ({ type, cardData }) => {
       return;
     }
 
-    const list = userList.map(item => (item.id === cardData.id ? { ...item, memo: memo } : item));
+    const list = userList.map((item) => (item.id === cardData.id ? { ...item, memo: memo } : item));
     setUserList(list);
     localStorage.setItem(USER_STORED_LIST, JSON.stringify(list));
     handleToast('save');
@@ -59,7 +59,7 @@ const Modal = ({ type, cardData }) => {
   };
 
   const removeData = () => {
-    const list = userList.filter(item => item.id !== cardData.id);
+    const list = userList.filter((item) => item.id !== cardData.id);
     setUserList(list);
     localStorage.setItem(USER_STORED_LIST, JSON.stringify(list));
     handleToast('remove');
@@ -67,7 +67,7 @@ const Modal = ({ type, cardData }) => {
   };
   return (
     <>
-      {toastStatus && <Toast message={toastMsg} select={type} />}
+      {toastStatus && <Toast message={toastMsg} />}
 
       {isOpen && cardData && (
         <ModalContainer onClick={closeModal}>
@@ -114,7 +114,7 @@ const InputRow = ({ labelName, value, allowEdit, onChange }) => (
 InputRow.propTypes = {
   labelName: PropTypes.string,
   value: PropTypes.string,
-  allowEdit: PropTypes.bool
+  allowEdit: PropTypes.bool,
 };
 
 const ModalContainer = styled.div`

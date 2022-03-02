@@ -6,7 +6,7 @@ export default function ScrollView({
   className,
   renderItem,
   keyExtractor,
-  onReachScrollEnd = () => {}
+  onReachScrollEnd = () => {},
 }) {
   const containerRef = useRef();
 
@@ -26,7 +26,7 @@ export default function ScrollView({
 
   return (
     <ul className={className} ref={containerRef}>
-      {data.map(item => cloneElement(renderItem(item), { key: keyExtractor(item) }))}
+      {data.map((item) => cloneElement(renderItem(item), { key: keyExtractor(item) }))}
     </ul>
   );
 }

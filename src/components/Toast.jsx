@@ -1,9 +1,8 @@
 import { css, keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 
-const Toast = ({ select, message }) => {
-  console.log(select);
-  return <ToastPop select={select}>{message}</ToastPop>;
+const Toast = ({ message }) => {
+  return <ToastPop>{message}</ToastPop>;
 };
 
 const fadein = keyframes`

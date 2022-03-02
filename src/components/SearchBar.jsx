@@ -8,12 +8,12 @@ const list = ['이름', '주소', '메모'];
 const SearchBar = ({ onQueryText }) => {
   const [dropdownSelected, setDropdownSelected] = useState(list[0]);
 
-  const onDropdownClick = useCallback(text => {
+  const onDropdownClick = useCallback((text) => {
     setDropdownSelected(text);
   }, []);
 
   const queryTextHandler = useCallback(
-    e => {
+    (e) => {
       onQueryText(dropdownSelected, e.target.value);
     },
     [dropdownSelected, onQueryText]
