@@ -1,4 +1,5 @@
-[[headers]]
-for = "/*"
-[headers.values]
-Access-Control-Allow-Origin = "*"
+[[redirects]]
+from = "/proxy/*"
+  to = "https://www.chungbuk.go.kr/:splat"  
+  status = 200
+  force = true

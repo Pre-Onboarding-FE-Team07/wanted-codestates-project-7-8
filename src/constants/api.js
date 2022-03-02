@@ -1,2 +1,2 @@
-export const API_URL =
-  'https://cors-anywhere.herokuapp.com/https://www.chungbuk.go.kr/openapi-json/pubdata/pubMapForest.do';
+const PROXY = window.location.hostname === 'localhost' ? '' : '/proxy';
+export const API_URL = `${PROXY}/openapi-json/pubdata/pubMapForest.do`;
