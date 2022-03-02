@@ -22,9 +22,7 @@ const Modal = ({ type, cardData }) => {
 
   const saveData = () => {
     if (memo === '') return; // toast: "메모를 입력해 주세요."
-    const list = userList.map((item) =>
-      item.id === cardData.id ? { ...item, memo: memo } : item
-    );
+    const list = userList.map(item => (item.id === cardData.id ? { ...item, memo: memo } : item));
     setUserList(list);
     localStorage.setItem(USER_STORED_LIST, JSON.stringify(list));
     // toast: "저장이 완료되었습니다."
@@ -32,7 +30,7 @@ const Modal = ({ type, cardData }) => {
   };
 
   const removeData = () => {
-    const list = userList.filter((item) => item.id !== cardData.id);
+    const list = userList.filter(item => item.id !== cardData.id);
     setUserList(list);
     localStorage.setItem(USER_STORED_LIST, JSON.stringify(list));
     // toast: "삭제가 완료되었습니다."
@@ -43,9 +41,9 @@ const Modal = ({ type, cardData }) => {
     cardData && (
       <ModalContainer onClick={closeModal}>
         <ModalBox onClick={preventClose}>
-          <InputRow labelName='이름' value={cardData.name}></InputRow>
-          <InputRow labelName='주소' value={cardData.address}></InputRow>
-          <InputRow labelName='연락처' value={cardData.phone}></InputRow>
+          <InputRow labelName="이름" value={cardData.name}></InputRow>
+          <InputRow labelName="주소" value={cardData.address}></InputRow>
+          <InputRow labelName="연락처" value={cardData.phone}></InputRow>
           <InputRow
             labelName='메모'
             value={memo}
@@ -55,7 +53,7 @@ const Modal = ({ type, cardData }) => {
           <ButtonWrap>
             {type === 'edit' ? (
               <>
-                <Button color='red' onClick={removeData}>
+                <Button color="red" onClick={removeData}>
                   삭제
                 </Button>
                 <Button onClick={saveData}>수정</Button>
@@ -74,11 +72,7 @@ const InputRow = ({ labelName, value, allowEdit, onChange }) => (
   <Row>
     <Label>{labelName}</Label>
     {allowEdit ? (
-      <Input
-        value={value}
-        placeholder='내용을 입력해주세요. '
-        onChange={onChange}
-      ></Input>
+      <Input value={value} placeholder="내용을 입력해주세요. " onChange={onChange}></Input>
     ) : (
       <Value>{value}</Value>
     )}
@@ -88,7 +82,7 @@ const InputRow = ({ labelName, value, allowEdit, onChange }) => (
 InputRow.propTypes = {
   labelName: PropTypes.string,
   value: PropTypes.string,
-  allowEdit: PropTypes.bool,
+  allowEdit: PropTypes.bool
 };
 
 const ModalContainer = styled.div`

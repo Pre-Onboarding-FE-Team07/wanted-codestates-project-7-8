@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
-import { useRecoilState } from 'recoil';
-import { userStoredList } from '../atoms';
+// import { useRecoilState } from 'recoil';
+// import { userStoredList } from '../atoms';
 import styled from '@emotion/styled';
 
 import SearchBar from '../components/SearchBar';
@@ -8,13 +8,13 @@ import Card from '../components/Card';
 import dummyData from '../data-with-memo.json';
 
 const Main = () => {
-  const [userList, setUserList] = useRecoilState(userStoredList);
+  // const [userList, setUserList] = useRecoilState(userStoredList);
 
   const queryTextHandler = useCallback((type, text) => {
     console.log(type, text);
   }, []);
 
-  const onCardClick = useCallback((cardData) => {
+  const onCardClick = useCallback(cardData => {
     console.log(cardData);
   }, []);
 
@@ -22,7 +22,7 @@ const Main = () => {
     <Container>
       <SearchBar onQueryText={queryTextHandler} />
       <CardContainer>
-        {dummyData?.map((user) => (
+        {dummyData?.map(user => (
           <Card key={user.id} cardData={user} onClickEvent={onCardClick} />
         ))}
       </CardContainer>
