@@ -12,7 +12,7 @@ export const apiDataList = selector({
       .get(
         "https://cors-anywhere.herokuapp.com/https://www.chungbuk.go.kr/openapi-json/pubdata/pubMapForest.do"
       )
-      .then((res) => JSON.stringify(res.data))
+      .then((res) => JSON.parse(res.data).response)
       .catch((err) => console.log(err));
 
     return response;
