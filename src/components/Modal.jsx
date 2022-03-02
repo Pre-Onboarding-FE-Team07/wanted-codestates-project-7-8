@@ -16,9 +16,9 @@ const Modal = ({ type, cardData }) => {
     setMemo(cardData.memo);
   }, [cardData]);
 
-  const preventClose = (e) => e.stopPropagation();
-  const changeInput = (e) => setMemo(e.target.value);
-  const closeModal = (e) => setOpen(false);
+  const preventClose = e => e.stopPropagation();
+  const changeInput = e => setMemo(e.target.value);
+  const closeModal = e => setOpen(false);
 
   const saveData = () => {
     if (memo === '') return; // toast: "메모를 입력해 주세요."
@@ -45,7 +45,7 @@ const Modal = ({ type, cardData }) => {
           <InputRow labelName="주소" value={cardData.address}></InputRow>
           <InputRow labelName="연락처" value={cardData.phone}></InputRow>
           <InputRow
-            labelName='메모'
+            labelName="메모"
             value={memo}
             allowEdit={true}
             onChange={changeInput}
