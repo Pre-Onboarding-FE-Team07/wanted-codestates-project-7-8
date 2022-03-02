@@ -1,5 +1,5 @@
-import { memo, useCallback } from 'react';
 import styled from '@emotion/styled';
+import { memo, useCallback } from 'react';
 
 const Card = ({ cardData, onClickEvent }) => {
   const cardClickHandler = useCallback(
@@ -13,9 +13,10 @@ const Card = ({ cardData, onClickEvent }) => {
 
   return (
     <Container onClick={cardClickHandler}>
-      <div>{cardData.name}</div>
-      <div>{cardData.address}</div>
-      <div>{cardData.phone}</div>
+      <div>{cardData.fcNm}</div>
+      <div>{cardData.fcAddr}</div>
+      <div>{cardData.ref1}</div>
+      {cardData.memo && <div>{cardData.memo}</div>}
     </Container>
   );
 };
