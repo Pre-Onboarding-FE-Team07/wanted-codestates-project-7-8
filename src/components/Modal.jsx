@@ -1,14 +1,13 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useRecoilState } from 'recoil';
 import { userStoredList } from '../atoms';
-import { USER_STORED_LIST } from '../constants/localStorage';
 
 const Modal = ({ type, cardData }) => {
   const [isOpen, setOpen] = useState(false);
-  const [memo, setMemo] = useState(cardData.memo);
+  const [memo, setMemo] = useState(cardData.memo || '');
   const [userList, setUserList] = useRecoilState(userStoredList);
 
   useEffect(() => {
@@ -16,26 +15,25 @@ const Modal = ({ type, cardData }) => {
     setMemo(cardData.memo);
   }, [cardData]);
 
-  const preventClose = (e) => e.stopPropagation();
-  const changeInput = (e) => setMemo(e.target.value);
-  const closeModal = (e) => setOpen(false);
+  const preventClose = useCallback((e) => e.stopPropagation(), []);
+  const changeInput = useCallback((e) => setMemo(e.target.value), []);
+  const closeModal = useCallback(() => setOpen(false), []);
 
-  const saveData = () => {
+  const saveData = useCallback(() => {
     if (memo === '') return; // toast: "메모를 입력해 주세요."
     const list = userList.map((item) => (item.id === cardData.id ? { ...item, memo: memo } : item));
     setUserList(list);
-    localStorage.setItem(USER_STORED_LIST, JSON.stringify(list));
-    // toast: "저장이 완료되었습니다."
     closeModal();
-  };
+    // toast: "저장이 완료되었습니다."
+  }, [cardData.id, closeModal, memo, setUserList, userList]);
 
-  const removeData = () => {
+  const removeData = useCallback(() => {
     const list = userList.filter((item) => item.id !== cardData.id);
     setUserList(list);
-    localStorage.setItem(USER_STORED_LIST, JSON.stringify(list));
-    // toast: "삭제가 완료되었습니다."
     closeModal();
-  };
+    // toast: "삭제가 완료되었습니다."
+  }, [cardData.id, closeModal, setUserList, userList]);
+
   return (
     isOpen &&
     cardData && (
