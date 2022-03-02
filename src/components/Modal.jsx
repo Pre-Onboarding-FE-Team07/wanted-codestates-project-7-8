@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { useCallback, useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { userStoredList } from '../atoms';
-import { USER_STORED_LIST } from '../constants/localStorage';
 import Toast from './Toast';
 
 const msgList = {
