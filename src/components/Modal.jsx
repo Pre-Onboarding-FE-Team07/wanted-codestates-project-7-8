@@ -1,7 +1,7 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useRecoilState } from 'recoil';
 import { userStoredList } from '../atoms';
 import { USER_STORED_LIST } from '../constants/localStorage';
@@ -17,7 +17,7 @@ const Modal = ({ type, cardData }) => {
   const [toastStatus, setToastStatus] = useState(false);
   const [toastMsg, setToastMsg] = useState('');
   const [isOpen, setOpen] = useState(false);
-  const [memo, setMemo] = useState(cardData.memo);
+  const [memo, setMemo] = useState(cardData.memo || '');
   const [userList, setUserList] = useRecoilState(userStoredList);
 
   const handleToast = (select) => {
@@ -41,9 +41,9 @@ const Modal = ({ type, cardData }) => {
     setMemo(cardData.memo);
   }, [cardData]);
 
-  const preventClose = (e) => e.stopPropagation();
-  const changeInput = (e) => setMemo(e.target.value);
-  const closeModal = (e) => setOpen(false);
+  const preventClose = useCallback((e) => e.stopPropagation(), []);
+  const changeInput = useCallback((e) => setMemo(e.target.value), []);
+  const closeModal = useCallback(() => setOpen(false), []);
 
   const saveData = () => {
     if (memo === '') {
@@ -65,6 +65,7 @@ const Modal = ({ type, cardData }) => {
     handleToast('remove');
     closeModal();
   };
+
   return (
     <>
       {toastStatus && <Toast message={toastMsg} />}
