@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 
 const Card = ({ cardData, onClickEvent }) => {
   const cardClickHandler = useCallback(
-    e => {
+    (e) => {
       onClickEvent(cardData);
     },
     [onClickEvent, cardData]

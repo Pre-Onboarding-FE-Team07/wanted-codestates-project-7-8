@@ -21,11 +21,11 @@ const Main = () => {
     const regex = new RegExp(text, 'gi');
 
     if (type === '이름') {
-      return userList.filter(item => item.name.match(regex));
+      return userList.filter((item) => item.name.match(regex));
     } else if (type === '주소') {
-      return userList.filter(item => item.address.match(regex));
+      return userList.filter((item) => item.address.match(regex));
     } else if (type === '메모') {
-      return userList.filter(item => item.memo.match(regex));
+      return userList.filter((item) => item.memo.match(regex));
     }
   }, [userList, searchFilter]);
 
@@ -33,7 +33,7 @@ const Main = () => {
     setSearchFilter({ type, text });
   }, []);
 
-  const onCardClick = useCallback(card => {
+  const onCardClick = useCallback((card) => {
     setCardData({ ...card });
   }, []);
 
@@ -45,7 +45,7 @@ const Main = () => {
     <Container>
       <SearchBar onQueryText={queryTextHandler} />
       <CardContainer>
-        {filteredList?.map(user => (
+        {filteredList?.map((user) => (
           <Card key={user.id} cardData={user} onClickEvent={onCardClick} />
         ))}
       </CardContainer>
