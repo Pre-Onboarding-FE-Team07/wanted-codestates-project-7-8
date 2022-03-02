@@ -5,27 +5,56 @@ import { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { userStoredList } from '../atoms';
 import { USER_STORED_LIST } from '../constants/localStorage';
+import Toast from './Toast';
+
+const msgList = {
+  save: '확인 되었습니다.',
+  remove: '삭제 되었습니다.',
+  write: '메모를 작성해주세요.'
+};
 
 const Modal = ({ type, cardData }) => {
+  const [toastStatus, setToastStatus] = useState(false);
+  const [toastMsg, setToastMsg] = useState('');
   const [isOpen, setOpen] = useState(false);
   const [memo, setMemo] = useState(cardData.memo);
   const [userList, setUserList] = useRecoilState(userStoredList);
+
+  const handleToast = select => {
+    if (!toastStatus) {
+      setToastStatus(true);
+      setToastMsg(msgList[select]);
+    }
+  };
+
+  useEffect(() => {
+    if (toastStatus) {
+      setTimeout(() => {
+        setToastStatus(false);
+        setToastMsg('');
+      }, 2000);
+    }
+  }, [toastStatus]);
 
   useEffect(() => {
     setOpen(true);
     setMemo(cardData.memo);
   }, [cardData]);
 
-  const preventClose = (e) => e.stopPropagation();
-  const changeInput = (e) => setMemo(e.target.value);
-  const closeModal = (e) => setOpen(false);
+  const preventClose = e => e.stopPropagation();
+  const changeInput = e => setMemo(e.target.value);
+  const closeModal = e => setOpen(false);
 
   const saveData = () => {
-    if (memo === '') return; // toast: "메모를 입력해 주세요."
+    if (memo === '') {
+      handleToast('write');
+      return;
+    }
+
     const list = userList.map(item => (item.id === cardData.id ? { ...item, memo: memo } : item));
     setUserList(list);
     localStorage.setItem(USER_STORED_LIST, JSON.stringify(list));
-    // toast: "저장이 완료되었습니다."
+    handleToast('save');
     closeModal();
   };
 
@@ -33,38 +62,41 @@ const Modal = ({ type, cardData }) => {
     const list = userList.filter(item => item.id !== cardData.id);
     setUserList(list);
     localStorage.setItem(USER_STORED_LIST, JSON.stringify(list));
-    // toast: "삭제가 완료되었습니다."
+    handleToast('remove');
     closeModal();
   };
   return (
-    isOpen &&
-    cardData && (
-      <ModalContainer onClick={closeModal}>
-        <ModalBox onClick={preventClose}>
-          <InputRow labelName="이름" value={cardData.name}></InputRow>
-          <InputRow labelName="주소" value={cardData.address}></InputRow>
-          <InputRow labelName="연락처" value={cardData.phone}></InputRow>
-          <InputRow
-            labelName='메모'
-            value={memo}
-            allowEdit={true}
-            onChange={changeInput}
-          ></InputRow>
-          <ButtonWrap>
-            {type === 'edit' ? (
-              <>
-                <Button color="red" onClick={removeData}>
-                  삭제
-                </Button>
-                <Button onClick={saveData}>수정</Button>
-              </>
-            ) : (
-              <Button onClick={saveData}>저장</Button>
-            )}
-          </ButtonWrap>
-        </ModalBox>
-      </ModalContainer>
-    )
+    <>
+      {toastStatus && <Toast message={toastMsg} select={type} />}
+
+      {isOpen && cardData && (
+        <ModalContainer onClick={closeModal}>
+          <ModalBox onClick={preventClose}>
+            <InputRow labelName="이름" value={cardData.name}></InputRow>
+            <InputRow labelName="주소" value={cardData.address}></InputRow>
+            <InputRow labelName="연락처" value={cardData.phone}></InputRow>
+            <InputRow
+              labelName="메모"
+              value={memo}
+              allowEdit={true}
+              onChange={changeInput}
+            ></InputRow>
+            <ButtonWrap>
+              {type === 'edit' ? (
+                <>
+                  <Button color="red" onClick={removeData}>
+                    삭제
+                  </Button>
+                  <Button onClick={saveData}>수정</Button>
+                </>
+              ) : (
+                <Button onClick={saveData}>저장</Button>
+              )}
+            </ButtonWrap>
+          </ModalBox>
+        </ModalContainer>
+      )}
+    </>
   );
 };
 
