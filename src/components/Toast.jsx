@@ -15,8 +15,9 @@ const fadeout = keyframes`
 `;
 
 const ToastPop = styled.div`
-  width: 100px;
-  height: 15px;
+  min-width: 100px;
+  width: auto;
+  min-height: 15px;
   position: fixed;
   display: flex;
   align-items: flex-end;

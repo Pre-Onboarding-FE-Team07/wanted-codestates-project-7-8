@@ -46,7 +46,7 @@ const Modal = ({ type, cardData }) => {
   const closeModal = useCallback(() => setOpen(false), []);
 
   const saveData = () => {
-    if (memo === '') {
+    if (memo === '' || !memo) {
       handleToast('write');
       return;
     }
@@ -67,36 +67,35 @@ const Modal = ({ type, cardData }) => {
   };
 
   return (
-     <>
+    <>
       {toastStatus && <Toast message={toastMsg} />}
-      {isOpen &&
-        cardData && (
-          <ModalContainer onClick={closeModal}>
-            <ModalBox onClick={preventClose}>
-              <InputRow labelName="이름" value={cardData.fcNm}></InputRow>
-              <InputRow labelName="주소" value={cardData.fcAddr}></InputRow>
-              <InputRow labelName="연락처" value={cardData.ref1}></InputRow>
-              <InputRow
-                labelName="메모"
-                value={memo}
-                allowEdit={true}
-                onChange={changeInput}
-              ></InputRow>
-              <ButtonWrap>
-                {type === 'edit' ? (
-                  <>
-                    <Button color="red" onClick={removeData}>
-                      삭제
-                </Button>
-                    <Button onClick={saveData}>수정</Button>
-                  </>
-                ) : (
-                  <Button onClick={saveData}>저장</Button>
-                )}
-              </ButtonWrap>
-            </ModalBox>
-          </ModalContainer>
-        )}
+      {isOpen && cardData && (
+        <ModalContainer onClick={closeModal}>
+          <ModalBox onClick={preventClose}>
+            <InputRow labelName="이름" value={cardData.fcNm}></InputRow>
+            <InputRow labelName="주소" value={cardData.fcAddr}></InputRow>
+            <InputRow labelName="연락처" value={cardData.ref1}></InputRow>
+            <InputRow
+              labelName="메모"
+              value={memo}
+              allowEdit={true}
+              onChange={changeInput}
+            ></InputRow>
+            <ButtonWrap>
+              {type === 'edit' ? (
+                <>
+                  <Button color="red" onClick={removeData}>
+                    삭제
+                  </Button>
+                  <Button onClick={saveData}>수정</Button>
+                </>
+              ) : (
+                <Button onClick={saveData}>저장</Button>
+              )}
+            </ButtonWrap>
+          </ModalBox>
+        </ModalContainer>
+      )}
     </>
   );
 };
