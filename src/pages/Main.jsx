@@ -1,12 +1,12 @@
-import { useCallback, useState, useMemo } from 'react';
+import styled from '@emotion/styled';
+import { useCallback, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { userStoredList } from '../atoms';
-import styled from '@emotion/styled';
-
-import SearchBar from '../components/SearchBar';
 import Card from '../components/Card';
+import { CardContainer } from '../components/CardContainer';
 import Modal from '../components/Modal';
+import SearchBar from '../components/SearchBar';
 
 const Main = () => {
   const userList = useRecoilValue(userStoredList);
@@ -21,9 +21,9 @@ const Main = () => {
     const regex = new RegExp(text, 'gi');
 
     if (type === '이름') {
-      return userList.filter((item) => item.name.match(regex));
+      return userList.filter((item) => item.fcNm.match(regex));
     } else if (type === '주소') {
-      return userList.filter((item) => item.address.match(regex));
+      return userList.filter((item) => item.fcAddr.match(regex));
     } else if (type === '메모') {
       return userList.filter((item) => item.memo.match(regex));
     }
@@ -44,11 +44,11 @@ const Main = () => {
   return (
     <Container>
       <SearchBar onQueryText={queryTextHandler} />
-      <CardContainer>
-        {filteredList?.map((user) => (
-          <Card key={user.id} cardData={user} onClickEvent={onCardClick} />
-        ))}
-      </CardContainer>
+      <CardContainer
+        data={filteredList}
+        keyExtractor={(item) => item.fcNo.toString()}
+        renderItem={(data) => <Card cardData={data} onClickEvent={onCardClick} />}
+      />
       <PlusButton onClick={onAddClick}>+</PlusButton>
       {cardData && <Modal type="edit" cardData={cardData} />}
     </Container>
@@ -74,17 +74,6 @@ const PlusButton = styled.div`
   &:hover {
     background-color: lightgray;
   }
-`;
-
-const CardContainer = styled.div`
-  max-width: 480px;
-  margin: 1rem auto;
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: auto;
-  grid-gap: 1rem;
-  padding: 1rem;
-  justify-items: center;
 `;
 
 const Container = styled.div`
