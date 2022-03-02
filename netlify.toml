@@ -1,5 +1,5 @@
 [[redirects]]
 from = "/proxy/*"
-  to = "https://www.chungbuk.go.kr/:splat"  
+  to = "https://www.chungbuk.go.kr/openapi-json/pubdata/pubMapForest.do:splat"
   status = 200
   force = true
