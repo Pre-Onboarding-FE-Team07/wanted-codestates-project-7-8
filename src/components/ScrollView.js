@@ -6,7 +6,7 @@ export default function ScrollView({
   className,
   renderItem,
   keyExtractor,
-  onReachScrollEnd = () => {},
+  onReachScrollEnd = () => {}
 }) {
   const containerRef = useRef();
 
@@ -15,7 +15,7 @@ export default function ScrollView({
     const root = isHeightTooLarge ? null : containerRef.current;
     const observer = new IntersectionObserver(
       ([entry]) => entry.isIntersecting && onReachScrollEnd(),
-      { root, rootMargin: `0px 0px ${threshold}px`, threshold: 1 },
+      { root, rootMargin: `0px 0px ${threshold}px`, threshold: 1 }
     );
     if (data.length > 0) {
       observer.disconnect();
@@ -26,7 +26,7 @@ export default function ScrollView({
 
   return (
     <ul className={className} ref={containerRef}>
-      {data.map((item) => cloneElement(renderItem(item), { key: keyExtractor(item) }))}
+      {data.map(item => cloneElement(renderItem(item), { key: keyExtractor(item) }))}
     </ul>
   );
 }
