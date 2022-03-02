@@ -4,9 +4,11 @@ import { USER_STORED_LIST } from '../constants/localStorage';
 import axios from 'axios';
 import { API_URL } from '../constants/api';
 
+import dummyData from '../data-with-memo.json';
+
 export const userStoredList = atom({
   key: 'userStoredList',
-  default: [],
+  default: dummyData,
   effects: [localStorageEffect(USER_STORED_LIST)]
 });
 export const apiDataList = selector({
