@@ -66,9 +66,42 @@
 
 ## 문선경
 
+- 프로젝트 환경설정
+- 휴양림 저장/삭제/수정 기능 구현
+
 #### 구현한 방법
 
+1. 프로젝트 환경설정
+
+- CRA, npm을 사용해 기본적인 프로젝트 환경 설정을 하고,
+  recoil, emotion/styled 등 사용할 패키지들을 추가로 설치함.
+
+2. 휴양림 저장/삭제/수정 기능 구현
+
+- @ye-yo님이 모달 컴포넌트의 UI 부분을 구현하셨고,
+  (type prop에 따라 저장 폼/수정 폼으로 UI가 변경되는 것, 모달 외부를 클릭하면 모달창이 닫히는 것 등)
+  나는 Modal 컴포넌트에서 저장/수정/삭제가 이루어지는 **로직 부분을 작성**했다.
+- 데이터를 저장/수정하는 `saveData()`, 데이터를 삭제하는 `removeData()` 함수를 작성함.
+- `saveData()` : cardData.memo를 유저가 작성한 memo로 저장/수정하고, userList에 변경된 cardData를 반영. (수정/저장 버튼 클릭 시 호출)
+- `removeData()` : userList에서 선택된 cardData를 삭제. (삭제 버튼 클릭 시 호출)
+
 #### 어려웠던 점 (에러 핸들링)
+
+1. eslint, prettier 충돌 문제
+
+- eslint, prettier 충돌이 발생했는데, 처음에는 구현을 빠르게 시작하기 위해서 우선 eslintrc에서 prettier를 무시하도록 설정했었음.
+- 나중에 eslint, prettier 충돌을 제대로 해결하기 위해 설정을 바꾸는 과정에서 발생하는 여러 에러가 발생함.
+- [https://seomoon.tech/85](https://seomoon.tech/85) 에서와 같이 디버깅하여 해결.
+
+2. 코드 스타일 컨벤션이 지켜지지 않은 PR이 올라오는 문제
+
+- husky로 git pre-commit hook을 설정.
+  깃 커밋 전에 lint-staged가 실행되고 lint 적용이 잘 된 경우에만 커밋을 할 수 있도록 강제해서 해결함.
+
+3. OS별로 (Windows, MacOS) 개행 방식이 달라서, windows에서 코드 작성 시 Lint 에러가 뜨는 불편함
+
+- `.gitattributes` 설정 파일 추가해
+  windows에서 crlf 개행이 lint 에러로 인식되지 않고, 커밋할 때는 crlf 개행이 lf 개행으로 전환되도록 설정해뒀는데, 제대로 적용이 되는지는 테스트가 필요한 상태임.
 
 ## 심채윤
 
