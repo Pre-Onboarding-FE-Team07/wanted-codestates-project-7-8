@@ -7,8 +7,6 @@ import SearchBar from '../components/SearchBar';
 import Card from '../components/Card';
 import dummyData from '../data-with-memo.json';
 
-import SearchBar from '../components/SearchBar';
-
 const Main = () => {
   const [userList, setUserList] = useRecoilState(userStoredList);
 

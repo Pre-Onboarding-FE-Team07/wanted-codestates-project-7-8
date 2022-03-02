@@ -47,7 +47,7 @@ const Container = styled.div`
     margin-top: 0.1rem;
     font-family: sans-serif;
     font-size: 0.9rem;
-    color: darkgreen;
+    color: #3fc176;
   }
 `;
 
