@@ -5,6 +5,7 @@
 ## 프로젝트 실행 방법
 
 - 배포 사이트
+https://chungbuk-foreset.netlify.app/ 
 
 - 로컬
 
