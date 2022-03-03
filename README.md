@@ -28,6 +28,14 @@ https://chungbuk-foreset.netlify.app/
 
 ---
 
+## 기술 스택
+<img src="https://img.shields.io/badge/React-61DAFB.svg?&style=for-the-badge&logo=React&logoColor=000"/> 
+<img src="https://img.shields.io/badge/Emotion-E6526F.svg?&style=for-the-badge&logo=Emotion&logoColor=000"/> 
+<img src="https://img.shields.io/badge/Recoil-0066FF.svg?&style=for-the-badge&logo=Recoil&logoColor=fff" />
+
+
+---
+
 ## 팀 멤버
 
 | 이름                                       | 직책 | 역할                                             |
@@ -37,7 +45,7 @@ https://chungbuk-foreset.netlify.app/
 | [🎨문선경](https://github.com/dev-seomoon) | 팀장 | 휴양림 저장/삭제/수정 기능 구현                  |
 | [🚀심채윤](https://github.com/Lela12)      | 팀원 | 유저 피드백 (Toast UI) 구현                      |
 | [✏️예효은](https://github.com/ye-yo)       | 팀원 | 휴양림 저장/삭제/수정 기능 구현                  |
-| [🔨이예지](https://github.com/Lee-ye-ji)   | 팀원 | 휴양림 API 호출 & 데이터 렌더링 (Main Page 구현) |
+| [🔨이예지](https://github.com/Lee-ye-ji)   | 팀원 | 로컬 스토리지에 데이터 저장 |
 | [🚚최민우](https://github.com/exxocism)    | 팀원 | 검색 기능 구현                                   |
 
 ---
@@ -140,8 +148,9 @@ https://chungbuk-foreset.netlify.app/
 ## 이예지
 
 #### 구현한 방법
-
+`Recoil`을 처음 사용해본 거라 공식문서와 유튜브 영상을 보면서 `Recoil`에 대해서 파악을 했었습니다. 찾아보면서 `Recoil`을 이용해서 [로컬 스토리지에 저장하는 코드](https://velog.io/@ye-ji/%EB%B0%9B%EC%95%84%EC%98%A8-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EB%A1%9C%EC%BB%AC-%EC%8A%A4%ED%86%A0%EB%A6%AC%EC%A7%80%EC%97%90-%EC%A0%80%EC%9E%A5%ED%95%98%EA%B8%B0-Recoil%EC%9D%84-%EC%9D%B4%EC%9A%A9%ED%95%98%EC%97%AC)를 찾게 되었고, 그 코드가 의미하는 것이 무엇인지 파악하려고 하였습니다. 여러 문서와 블로그에 대해 찾아보면서 테스트를 해 본 결과 코드에 대해 알 수 있었습니다.
 #### 어려웠던 점 (에러 핸들링)
+공공 데이터 api를 이용한 `cors`에 대한 오류 부분이 어려웠습니다.  proxy를 이용하는 `http-proxy-middleware` 라이브러리를 사용하는 방법도 생각하여 코드를 작성하기도 했었지만, 이 방법도 배포 시에도 해결되는 것이 아니라고 생각하였습니다. 결국 다른 팀원 분께서 생각하셨던 프록시 서버 URL을 붙여서 요청하는 방법이 더 배포하기에도 편리할 것 같다고 생각해서 그 방법으로 결정하였습니다. 그 후 netlify로 배포 후에도 CORS오류가 났었고, 블로그 또는 팀원들과 함께 문제를 해결할 수 있었습니다.
 
 ## 최민우
 
