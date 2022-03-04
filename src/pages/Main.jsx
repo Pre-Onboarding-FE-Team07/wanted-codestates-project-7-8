@@ -49,22 +49,23 @@ const Main = () => {
         keyExtractor={(item) => item.fcNo.toString()}
         renderItem={(data) => <Card cardData={data} onClickEvent={onCardClick} />}
       />
-      <PlusButton onClick={onAddClick}>+</PlusButton>
       {cardData && <Modal type="edit" cardData={cardData} />}
+      <PlusButton onClick={onAddClick}>+</PlusButton>
     </Container>
   );
 };
 
 const PlusButton = styled.div`
   margin: 0 auto 3rem auto;
-  width: 2rem;
-  height: 2rem;
-  border-radius: 10px;
-  background-color: #e9ebee;
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+  background-color: #e74c3c;
+  color: #fff;
   box-shadow: 0 2px 4px 0 grey, 0 0 0 0.5px #e9ebee inset;
   cursor: pointer;
   font-weight: bold;
-  font-size: 1.3rem;
+  font-size: 1.5rem;
 
   display: flex;
   justify-content: center;
@@ -72,7 +73,7 @@ const PlusButton = styled.div`
   user-select: none;
 
   &:hover {
-    background-color: lightgray;
+    background-color: #c73929;
   }
 `;
 

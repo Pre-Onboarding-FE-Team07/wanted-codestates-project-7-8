@@ -14,12 +14,13 @@ const msgList = {
 
 const Modal = ({ type, cardData }) => {
   const [toastStatus, setToastStatus] = useState(false);
-  const [toastMsg, setToastMsg] = useState('');
+  const [toastMsg, setToastMsg] = useState();
   const [isOpen, setOpen] = useState(false);
   const [memo, setMemo] = useState(cardData.memo || '');
   const [userList, setUserList] = useRecoilState(userStoredList);
 
   const handleToast = (select) => {
+    console.log('select', select);
     if (!toastStatus) {
       setToastStatus(true);
       setToastMsg(msgList[select]);

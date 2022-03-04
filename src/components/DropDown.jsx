@@ -43,12 +43,11 @@ const Dropdown = styled.div`
   white-space: nowrap;
   vertical-align: middle;
   user-select: none;
-  border: 1px solid rgba(0, 0, 0, 0.5);
-  padding: 0.375rem 0.75rem;
+  border: 2px solid #999999;
+  padding: 0.85rem 1rem;
   font-size: 1rem;
   border-radius: 0.25rem;
   align-items: center;
-  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.25);
   cursor: pointer;
 
   & svg {
@@ -56,7 +55,7 @@ const Dropdown = styled.div`
   }
 
   &:hover {
-    border: 1px solid rgba(0, 0, 0, 0.75);
+    border: 2px solid #000;
   }
 `;
 
@@ -74,7 +73,7 @@ const DownBtn = () => {
     >
       <path
         fill="none"
-        stroke="#000000"
+        stroke="#000"
         strokeLinecap="round"
         strokeLinejoin="round"
         strokeWidth="2"
@@ -90,20 +89,20 @@ const DropListContainer = styled.div`
   flex-direction: column;
   left: ${({ pos }) => pos.offsetLeft}px;
   top: ${({ pos }) => pos.offsetTop + pos.offsetHeight + 10}px;
-  background-color: #fff;
-  border: 1px solid rgba(0, 0, 0, 0.5);
+  border: 1px solid #c4c4c4;
   border-radius: 0.25rem;
-  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.25);
   width: ${({ pos }) => pos.offsetWidth}px;
+  background-color: #fff;
 
   & div {
-    text-align: center;
     padding: 0.5rem;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+    padding-left: 1em;
+    border-bottom: 2px solid #c4c4c4;
     cursor: pointer;
 
     &:hover {
-      background-color: #f5f5f5;
+      background-color: #999999;
+      color: #fff;
     }
   }
 `;

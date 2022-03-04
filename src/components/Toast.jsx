@@ -25,9 +25,10 @@ const ToastPop = styled.div`
   z-index: 999;
   color: black;
   text-align: center;
-  padding: 1rem;
-  font-size: 13px;
-  background-color: #fdfd38;
+  padding: 1rem 2rem;
+  font-size: 15px;
+  font-weight: 600;
+  background-color: #fff968;
   -webkit-animation: ${css`
     ${fadein} 0.5s, ${fadeout} 0.5s 2.5s
   `};
