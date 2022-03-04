@@ -2,6 +2,8 @@
 
 충청북도 휴양림 중 마음에 드는 곳에 메모를 남겨 저장하는 서비스입니다.
 
+<img width="400px" src="https://user-images.githubusercontent.com/50618754/156707175-d8aae14f-314a-4fa6-9818-21e99e644681.gif"/>
+
 ## 프로젝트 실행 방법
 
 - 배포 사이트
