@@ -31,7 +31,7 @@ const Modal = ({ type, cardData }) => {
     if (toastStatus) {
       setTimeout(() => {
         setToastStatus(false);
-        setToastMsg([]);
+        setToastMsg('');
       }, 3000);
     }
   }, [toastStatus]);
