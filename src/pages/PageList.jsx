@@ -13,13 +13,18 @@ const GoHomeButton = styled.button`
   border: none;
   cursor: pointer;
   font-weight: bold;
-  font-size: 1.5rem;
+  font-size: 1rem;
   border-radius: 50%;
   background-color: #e74c3c;
   color: #fff;
-  width: 5rem;
-  height: 5rem;
-  position: absolute;
+  width: 3rem;
+  height: 3rem;
+  left: calc((100vw - 480px) / 2 - 4rem);
+  position: fixed;
+
+  @media (max-width: 620px) {
+    left: 10px;
+  }
 `;
 
 const Container = styled.div`
