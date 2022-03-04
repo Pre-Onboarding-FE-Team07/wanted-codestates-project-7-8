@@ -65,7 +65,7 @@ const PlusButton = styled.div`
   box-shadow: 0 2px 4px 0 grey, 0 0 0 0.5px #e9ebee inset;
   cursor: pointer;
   font-weight: bold;
-  font-size: 1.5rem;
+  font-size: 2.5rem;
 
   display: flex;
   justify-content: center;

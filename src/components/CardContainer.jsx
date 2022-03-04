@@ -8,6 +8,6 @@ export const CardContainer = styled(ScrollView)`
   grid-template-columns: 1fr;
   grid-template-rows: auto;
   grid-gap: 1rem;
-  padding: 1rem;
+  padding: 1.4rem;
   justify-items: center;
 `;

@@ -1,6 +1,5 @@
 import { css, keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
-
 const Toast = ({ message }) => {
   return <ToastPop>{message}</ToastPop>;
 };
@@ -21,14 +20,14 @@ const ToastPop = styled.div`
   position: fixed;
   display: flex;
   align-items: flex-end;
-  right: 105px;
+  right: calc((100vw - 480px) / 2 - 1rem);
   z-index: 999;
-  color: black;
+  color: white;
   text-align: center;
   padding: 1rem 2rem;
   font-size: 15px;
   font-weight: 600;
-  background-color: #fff968;
+  background-color: #3fc176;
   -webkit-animation: ${css`
     ${fadein} 0.5s, ${fadeout} 0.5s 2.5s
   `};
@@ -36,6 +35,9 @@ const ToastPop = styled.div`
     ${fadein} 0.5s, ${fadeout} 0.5s 2.5s
   `};
   animation-fill-mode: forwards;
+  @media (max-width: 540px) {
+    right: 1rem;
+  }
 `;
 
 export default Toast;
