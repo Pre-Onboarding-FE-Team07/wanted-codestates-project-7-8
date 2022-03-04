@@ -41,7 +41,7 @@ https://chungbuk-foreset.netlify.app/
 | 이름                                       | 직책 | 역할                                             |
 | ------------------------------------------ | ---- | ------------------------------------------------ |
 | [✨김정훈](https://github.com/jeonghun10)  | 팀원 | 휴양림 API 호출 & 데이터 렌더링 (Main Page 구현) |
-| [⚡️박진용](https://github.com/jinyongp)   | 팀원 | 무한 스크롤 구현                                 |
+| [⚡️박진용](https://github.com/jinyongp)   | 팀원 | 무한 스크롤 구현 및 PageList 완성                   |
 | [🎨문선경](https://github.com/dev-seomoon) | 팀장 | 휴양림 저장/삭제/수정 기능 구현                  |
 | [🚀심채윤](https://github.com/Lela12)      | 팀원 | 유저 피드백 (Toast UI) 구현                      |
 | [✏️예효은](https://github.com/ye-yo)       | 팀원 | 휴양림 저장/삭제/수정 기능 구현                  |
@@ -53,7 +53,7 @@ https://chungbuk-foreset.netlify.app/
 ## 구현한 기능 목록
 
 - API 호출을 통해 휴양림 목록 불러오기
-- 무한 스크롤
+- 무한 스크롤 구현 및 PageList 완성
 - 휴양림 정보 클릭 시 저장/수정이 가능한 모달창 표시
 - 휴양림 정보 저장/수정/삭제
 - 저장된 휴양림 목록 검색
@@ -69,9 +69,35 @@ https://chungbuk-foreset.netlify.app/
 
 ## 박진용
 
+- ScrollView 컴포넌트 구현
+- PageList 페이지 완성
+
 #### 구현한 방법
 
+##### ScrollView
+
+|Name|Description|Type|Default|
+|:-|:-|:-:|:-:|
+|data|데이터 목록입니다.|any[]|X|
+|threshold|onReachScrollEnd 함수가 호출되는 범위를 결정합니다.|number|0|
+|renderItem|React 요소를 반환하는 함수입니다. data 배열의 요소가 인자로 전달됩니다.|(item) => ReactNode|X|
+|keyExtractor|data 배열의 요소에서 key 용도의 값을 추출합니다.|(item) => string|X|
+|onReachScrollEnd|스크롤의 마지막에 도달하면 호출되는 함수입니다. threshold 속성에 의해 실행시점이 변경될 수 있습니다.|() => void|X|
+
+- 맨 밑까지 스크롤하면 `onReachScrollEnd` 함수가 자동으로 호출되도록 IntersectionObserver API를 이용해 구현했습니다.
+- `threshold` 속성을 통해 맨 밑이 아닌 어느 정도 밑이면 `onReachScrollEnd` 함수가 호출되도록 변경할 수 있습니다.
+
+##### PageList
+
+- Main 페이지에서 사용하는 `CardContainer`와 `Card` 컴포넌트가 동일하므로, 이를 따로 분리하여 PageList 페이지에서 또한 호출했습니다.
+- Modal 컴포넌트에 클릭한 data를 넘겨 메모를 추가하여 저장할 수 있도록 했습니다.
+
 #### 어려웠던 점 (에러 핸들링)
+
+- IntersectionObserver에서 options으로 받는 threshold는 관찰 중인 요소에 도달한 후에야 계산되는 값이었기 때문에, 그것보다도 미리 `onReachScrollEnd` 함수를 호출하기에는 무리였습니다. 대신 `rootMargin`의 bottom 값을 threshold로 설정하여 관찰 중인 요소가 안 보이더라도 호출하게끔 구현하였습니다.
+- IntersectionObserver의 `root`이자 container인 `ul` 태그의 높이가 정해지지 않는다면, 자식 요소는 항상 `ul` 태그 안에 관찰되기 때문에 스크롤 높이와 무관하게 `onReachScrollEnd` 함수가 계속 호출되는 문제가 있었습니다. Container가 뷰포트의 높이보다 크다면, `root`를 container 대신 `null`로 변경하여 뷰포트를 기준으로 하는 방식으로 문제를 해결했습니다.
+- ReactNode를 반환하는 함수 `renderItem`을 `map` 안에서 호출해야 할 때, jsx 문법은 동작하지 않았습니다. `cloneElement`를 이용하여 `key` 값을 추가로 전달해주면서 문제를 해결했습니다.
+
 
 ## 문선경
 
