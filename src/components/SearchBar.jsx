@@ -37,11 +37,10 @@ const FlexContainer = styled.div`
 const InputText = styled.input`
   margin-left: 0.5rem;
   flex-grow: 1;
-  border: 1px solid rgba(0, 0, 0, 0.5);
+  border: 2px solid #999999;
   border-radius: 0.25rem;
-  padding: 0.5rem;
+  padding: 1rem;
   font-size: 1rem;
-  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.25);
 `;
 
 export default SearchBar;

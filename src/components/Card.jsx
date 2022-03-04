@@ -24,18 +24,19 @@ const Card = ({ cardData, onClickEvent }) => {
 const Container = styled.div`
   width: 90%;
   padding: 20px 24px;
-  background-color: white;
-  box-shadow: 0 2px 4px 0 grey, 0 0 0 0.5px #e9ebee inset;
+  border: 2px solid #999;
   border-radius: 10px;
 
   &:hover {
-    box-shadow: 0 2px 4px 0 skyblue, 0 0 0 0.5px #e9ebee inset, 0 0 0 0.5px #e9ebee inset;
+    cursor: pointer;
+    box-shadow: 0 2px 4px 0 #acabab, 0 0 0 0.5px #e9ebee inset, 0 0 0 0.5px #e9ebee inset;
   }
 
   & div:nth-of-type(1) {
     font-family: sans-serif;
     font-size: 1.2rem;
-    font-weight: bold;
+    font-weight: 700;
+    color: #3fc176;
   }
 
   & div:nth-of-type(2) {
@@ -48,7 +49,7 @@ const Container = styled.div`
     margin-top: 0.1rem;
     font-family: sans-serif;
     font-size: 0.9rem;
-    color: #3fc176;
+    color: #e74c3c;
   }
 `;
 

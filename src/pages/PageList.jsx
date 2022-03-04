@@ -9,9 +9,17 @@ import Modal from '../components/Modal';
 import { getDataFromApi } from '../utilities/api';
 
 const GoHomeButton = styled.button`
-  background-color: transparent;
+  /* background-color: transparent; */
   border: none;
   cursor: pointer;
+  font-weight: bold;
+  font-size: 1.5rem;
+  border-radius: 50%;
+  background-color: #e74c3c;
+  color: #fff;
+  width: 5rem;
+  height: 5rem;
+  position: absolute;
 `;
 
 const Container = styled.div`
