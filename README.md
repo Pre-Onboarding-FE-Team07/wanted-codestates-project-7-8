@@ -74,35 +74,79 @@ https://chungbuk-foreset.netlify.app/
 
 ## 박진용
 
-- ScrollView 컴포넌트 구현
-- PageList 페이지 완성
-
 #### 구현한 방법
 
-##### ScrollView
+[제출한 PR 목록](https://github.com/Pre-Onboarding-FE-Team07/wanted-codestates-project-7-8/pulls?q=is%3Apr+sort%3Aupdated-desc+is%3Aclosed+author%3Ajinyongp)
+
+##### [ScrollView](./src/components/ScrollView.jsx)
 
 |Name|Description|Type|Default|
 |:-|:-|:-:|:-:|
-|data|데이터 목록입니다.|any[]|X|
+|data|데이터 목록입니다.|any[]|-|
 |threshold|onReachScrollEnd 함수가 호출되는 범위를 결정합니다.|number|0|
-|renderItem|React 요소를 반환하는 함수입니다. data 배열의 요소가 인자로 전달됩니다.|(item) => ReactNode|X|
-|keyExtractor|data 배열의 요소에서 key 용도의 값을 추출합니다.|(item) => string|X|
-|onReachScrollEnd|스크롤의 마지막에 도달하면 호출되는 함수입니다. threshold 속성에 의해 실행시점이 변경될 수 있습니다.|() => void|X|
+|renderItem|React 요소를 반환하는 함수입니다. data 배열의 요소가 인자로 전달됩니다.|(item) => ReactNode|-|
+|keyExtractor|data 배열의 요소에서 key 용도의 값을 추출합니다.|(item) => string|-|
+|onReachScrollEnd|스크롤의 마지막에 도달하면 호출되는 함수입니다. threshold 속성에 의해 실행시점이 변경될 수 있습니다.|() => void|-|
 
 - 맨 밑까지 스크롤하면 `onReachScrollEnd` 함수가 자동으로 호출되도록 IntersectionObserver API를 이용해 구현했습니다.
+
 - `threshold` 속성을 통해 맨 밑이 아닌 어느 정도 밑이면 `onReachScrollEnd` 함수가 호출되도록 변경할 수 있습니다.
 
-##### PageList
+##### [PageList](./src/pages/PageList.jsx)
 
-- Main 페이지에서 사용하는 `CardContainer`와 `Card` 컴포넌트가 동일하므로, 이를 따로 분리하여 PageList 페이지에서 또한 호출했습니다.
-- Modal 컴포넌트에 클릭한 data를 넘겨 메모를 추가하여 저장할 수 있도록 했습니다.
+- [Main](./src/pages/Main.jsx) 페이지에서 사용하는 [`CardContainer`](./src/components/CardContainer.jsx)와 [`Card`](./src/components/Card.jsx) 컴포넌트가 동일하므로, 이를 별도의 컴포넌트로 분리하여 PageList 페이지에서 또한 호출했습니다. `CardContainer`는 무한 스크롤 기능이 필요하므로 `ScrollView` 컴포넌트를 기반으로 하여 생성했습니다.
+
+- `PageList`에서 `Card`를 클릭했을 때, [Modal](src/components/Modal.jsx) 컴포넌트에 해당 `Card`의 `cardData`를 전달해 메모를 추가하여 저장할 수 있도록 둘을 연결했습니다.
 
 #### 어려웠던 점 (에러 핸들링)
 
-- IntersectionObserver에서 options으로 받는 threshold는 관찰 중인 요소에 도달한 후에야 계산되는 값이었기 때문에, 그것보다도 미리 `onReachScrollEnd` 함수를 호출하기에는 무리였습니다. 대신 `rootMargin`의 bottom 값을 threshold로 설정하여 관찰 중인 요소가 안 보이더라도 호출하게끔 구현하였습니다.
-- IntersectionObserver의 `root`이자 container인 `ul` 태그의 높이가 정해지지 않는다면, 자식 요소는 항상 `ul` 태그 안에 관찰되기 때문에 스크롤 높이와 무관하게 `onReachScrollEnd` 함수가 계속 호출되는 문제가 있었습니다. Container가 뷰포트의 높이보다 크다면, `root`를 container 대신 `null`로 변경하여 뷰포트를 기준으로 하는 방식으로 문제를 해결했습니다.
-- ReactNode를 반환하는 함수 `renderItem`을 `map` 안에서 호출해야 할 때, jsx 문법은 동작하지 않았습니다. `cloneElement`를 이용하여 `key` 값을 추가로 전달해주면서 문제를 해결했습니다.
+- IntersectionObserver에서 options로 받는 threshold는 관찰 중인 요소가 일부라도 `root`와 겹쳐야 필요한 값이었기 때문에, 그것보다도 미리 `onReachScrollEnd` 함수를 호출하려는 의도에는 적합하지 않았습니다. 대신 `rootMargin`의 bottom 값을 threshold로 설정하여 관찰 중인 요소의 위치와 상관없이 스크롤의 높이에 기반하여 호출을 결정하게끔 구현하는 방식으로 문제를 해결했습니다.
 
+- IntersectionObserver의 `root`인 `ul` 태그의 높이가 정해지지 않을 경우(실제로 `CardContainer`의 경우 height를 지정하지 않았습니다.), 자식 요소는 항상 `root`인 `ul` 태그 안에서 관찰되기 때문에 스크롤 높이와 무관하게 `onReachScrollEnd` 함수가 계속 호출되는 문제가 있었습니다. [`root`의 높이가 뷰포트의 높이보다 커질 경우, `root`를 `null`로 설정하여 뷰포트를 기준으로 관찰하도록 하는 방법](./src/components/ScrollView.jsx#L14)으로 문제를 해결했습니다.
+
+```js
+const isHeightTooLarge = containerRef.current.clientHeight >= window.innerHeight;
+const root = isHeightTooLarge ? null : containerRef.current; // container의 높이가 window의 높이보다 커진다면 root를 null로 설정합니다.
+```
+
+- `renderItem` 함수가 반환하는 ReactNode를 `map`의 결과값으로 표현하기 위해 여러 방법을 시도했습니다.
+  
+  - `renderItem`의 결과를 그대로 반환합니다. 하지만, 이 방법은 `key`를 포함하지 않습니다.
+  
+    ```jsx
+    {data?.map((item) => renderItem(item))}
+
+    // Warning: Each child in a list should have a unique "key" prop.
+    ```
+
+  - `renderItem`의 결과를 변수로 받아 `key`를 추가하여 반환하도록 시도해보았습니다. 하지만, `renderItem`이 반환하는 값은 component가 아닌 element이므로 타입 에러가 발생했습니다.
+  
+    ```jsx
+    {data?.map((item) => {
+      const Item = renderItem(item);
+      return <Item key={keyExtractor(item)} />;
+    })}
+
+    // Element type is invalid: expected a string (for built-in components) or a class/function (for composite components) but got: object.
+    ```
+  
+  - `Item`에 `key` 프로퍼티에 직접 할당하는 방법으로 시도해보았으나 `key` 프로퍼티는 읽기 전용 속성이라 불가능했습니다.
+
+    ```jsx
+    {data?.map((item) => {
+      const Item = renderItem(item);
+      Item.key = keyExtractor(item);
+      return Item;
+    })}
+
+    // Uncaught TypeError: Cannot assign to read only property 'key' of object '#<Object>'
+    ```
+
+  - `key`를 element에 할당하는 방법을 조사해보았고 `cloneElement` 함수를 통해 문제를 해결할 수 있었습니다.
+
+    ```jsx
+    {data?.map((item) => cloneElement(renderItem(item), { key: keyExtractor(item) }))}
+    ```
 
 ## 문선경
 
